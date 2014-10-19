@@ -1,0 +1,30 @@
+---
+- name: Play | Check to see if download exists
+  stat:
+    path: /opt/tmp/play-{{ play_framework_version }}.zip
+  register: play_framework_download_check
+
+- name: Play | download play framework
+  get_url:
+    dest: /opt/tmp
+    url: "http://downloads.typesafe.com/play/{{ play_framework_version }}/play-{{ play_framework_version }}.zip"
+  register: play_framework_downloaded
+
+- name: Play | extract play framework to /opt/typesafe
+  command: "unzip /opt/tmp/play-{{ play_framework_version }}.zip -d /opt/typesafe"
+  when: play_framework_downloaded|changed
+
+- name: update link to latest extract
+  file:
+    src="/opt/typesafe/play-{{ play_framework_version }}"
+    dest=/opt/typesafe/playframework
+    state=link
+  when: play_framework_downloaded|changed
+
+- name: correct play framework  ownership
+  file:
+    path="/opt/typesafe/play-{{ play_framework_version }}"
+    owner=jenkins
+    recurse=yes
+    state=directory
+  when: play_framework_downloaded|changed

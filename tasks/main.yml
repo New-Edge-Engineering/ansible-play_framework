@@ -1,0 +1,14 @@
+---
+- name: install supporting software
+  apt: pkg=unzip
+
+- name: create play installation directory
+  file:
+    dest=/opt/typesafe
+    state=directory
+
+- include: play.yml
+  when: play_framework_version[:3] | version_compare('2.2' '<=')
+
+- include: activator.yml
+  when: play_framework_version[:3] | version_compare('2.3' '=>')
