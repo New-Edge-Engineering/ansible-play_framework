@@ -8,7 +8,7 @@
     state=directory
 
 - include: play.yml
-  when: play_framework_version[:3] | version_compare('2.2' '<=')
+  when: play_framework_version[:3]|version_compare('2.2', '<=')
 
 - include: activator.yml
-  when: play_framework_version[:3] | version_compare('2.3' '=>')
+  when: play_framework_version[:3]|version_compare('2.3', '>=')

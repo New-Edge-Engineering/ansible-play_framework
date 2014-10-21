@@ -6,12 +6,13 @@
 
 - name: Play | download play framework
   get_url:
-    dest: /opt/tmp
+    dest: /tmp
     url: "http://downloads.typesafe.com/play/{{ play_framework_version }}/play-{{ play_framework_version }}.zip"
   register: play_framework_downloaded
+  when: play_framework_download_check|changed
 
 - name: Play | extract play framework to /opt/typesafe
-  command: "unzip /opt/tmp/play-{{ play_framework_version }}.zip -d /opt/typesafe"
+  command: "unzip /tmp/play-{{ play_framework_version }}.zip -d /opt/typesafe"
   when: play_framework_downloaded|changed
 
 - name: update link to latest extract
