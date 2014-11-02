@@ -12,7 +12,7 @@
   when: play_framework_download_check.stat.exists == false
 
 - name: Play | extract activator to /opt/typesafe
-  command: "unzip /tmp/typesafe-activator-1.2.10-minimal.zip -d /opt/typesafe"
+  command: "unzip -n /tmp/typesafe-activator-1.2.10-minimal.zip -d /opt/typesafe"
   when: play_framework_downloaded|changed
 
 - name: update link to latest extract
