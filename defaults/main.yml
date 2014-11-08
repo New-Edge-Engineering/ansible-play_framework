@@ -1,2 +1,4 @@
 ---
+play_framework_group: typesafe
+play_framework_username: play
 play_framework_version: 2.3.2

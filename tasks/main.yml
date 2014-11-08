@@ -1,11 +1,31 @@
 ---
-- name: install supporting software
+# support
+- name: Play Framework | install supporting software
   apt: pkg=unzip
 
-- name: create play installation directory
+# user and group management
+- name: Play Framework | Ensure play group exists
+  group:
+    name: "{{ play_framework_group }}"
+    state: present
+  sudo: yes
+
+- name: Play Application | Ensure play user exists
+  user:
+    name: "{{ play_framework_username }}"
+    groups: "{{ play_framework_group }}"
+    createhome: no
+    system: yes
+    state: present
+  sudo: yes
+
+# file system
+- name: Play Framework | Ensure play installation directory exists
   file:
-    dest=/opt/typesafe
-    state=directory
+    dest: /opt/typesafe
+    state: directory
+    owner: "{{ play_framework_username }}"
+    group: "{{ play_framework_group }}"
 
 - include: play.yml
   when: play_framework_version[:3]|version_compare('2.2', '<=')

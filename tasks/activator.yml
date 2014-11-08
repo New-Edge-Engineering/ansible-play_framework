@@ -15,17 +15,17 @@
   command: "unzip -n /tmp/typesafe-activator-1.2.10-minimal.zip -d /opt/typesafe"
   when: play_framework_downloaded|changed
 
-- name: update link to latest extract
+- name: Play | update link to latest extract
   file:
     src="/opt/typesafe/activator-1.2.10-minimal"
     dest=/opt/typesafe/playframework
     state=link
   when: play_framework_downloaded|changed
 
-- name: correct activator ownership
+- name: Play | correct activator ownership
   file:
     path="/opt/typesafe/activator-1.2.10-minimal"
-    owner=jenkins
+    owner={{ play_framework_username }}
     recurse=yes
     state=directory
   when: play_framework_downloaded|changed
