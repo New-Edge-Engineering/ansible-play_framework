@@ -1,14 +1,14 @@
 ---
 # support
 - name: Play Framework | install supporting software
-  apt: pkg=unzip
+  package:
+    name: unzip
 
 # user and group management
 - name: Play Framework | Ensure play group exists
   group:
     name: "{{ play_framework_group }}"
     state: present
-  sudo: yes
 
 - name: Play Application | Ensure play user exists
   user:
@@ -17,7 +17,6 @@
     createhome: no
     system: yes
     state: present
-  sudo: yes
 
 # file system
 - name: Play Framework | Ensure play installation directory exists
@@ -27,8 +26,8 @@
     owner: "{{ play_framework_username }}"
     group: "{{ play_framework_group }}"
 
-- include: play.yml
+- include_tasks: play.yml
   when: play_framework_version[:3]|version_compare('2.2', '<=')
 
-- include: activator.yml
+- include_tasks: activator.yml
   when: play_framework_version[:3]|version_compare('2.3', '>=')
